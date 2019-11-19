@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <com.a1anwang.lib_radarview.RadarView
+        android:id="@+id/radarview"
+        android:layout_width="match_parent"
+        android:background="#33ff0000"
+        android:layout_marginTop="30dp"
+        app:radiantLineColor="@android:color/transparent"
+        android:layout_height="300dp"
+        app:dotColor="#000000"
+        app:textColor="#ffffff"
+        app:bgColor="#22000000"
+        app:strokeColor="#FFCC44" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_marginTop="30dp"
+        android:layout_height="wrap_content">
+        <Button
+            android:onClick="addTag"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="增加一个标签"
+            android:layout_height="wrap_content" />
+        <Button
+            android:onClick="removeTag"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="减少一个标签"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <Button
+        android:onClick="changeColor"
+        android:layout_width="wrap_content"
+        android:text="随机变色"
+        android:layout_height="wrap_content" />
+</LinearLayout>

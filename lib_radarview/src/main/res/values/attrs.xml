@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="RadarView">
+        <attr name="textColor" format="color" />
+        <attr name="textSize" format="dimension" />
+        <attr name="labelColor" format="color" />
+        <attr name="labelSize" format="dimension" />
+        <attr name="labelMargin" format="dimension" />
+
+        <attr name="netLineColor" format="color" />
+        <attr name="netLineWidth" format="dimension" />
+        <attr name="netLineNum" format="integer" />
+
+        <attr name="radiantLineColor" format="color" />
+        <attr name="radiantLineWidth" format="dimension" />
+
+        <attr name="strokeWidth" format="dimension" />
+        <attr name="strokeColor" format="color" />
+        <attr name="solidColor" format="color" />
+        <attr name="dotColor" format="color" />
+        <attr name="dotRadius" format="dimension" />
+
+        <attr name="bgColor" format="color" />
+    </declare-styleable>
+</resources>

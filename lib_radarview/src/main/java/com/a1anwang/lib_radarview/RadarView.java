@@ -10,6 +10,7 @@ import android.graphics.Point;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
 
@@ -53,6 +54,8 @@ public class RadarView extends View {
 
     private SparseArray<Path> netLinePathList;
     private SparseArray<Point> dotList;
+    private SparseArray<Point> topPointList;//各顶点坐标
+
 
     private Path strokePath;
 
@@ -106,6 +109,7 @@ public class RadarView extends View {
         netLinePathList=new SparseArray<>();
         strokePath=new Path();
         dotList=new SparseArray<>();
+        topPointList=new SparseArray<>();
     }
 
     public void setRadarItemList(List<RadarItem> radarItemList) {
@@ -249,25 +253,21 @@ public class RadarView extends View {
                 }
                 if(i==radarItemSize-1){
                     path.close();
-                    if(j==0){
-                        //画底色
-                        paint.setStyle(Paint.Style.FILL);
-                        paint.setColor(bgColor);
-                        canvas.drawPath(path,paint);
-                    }
-                    paint.setStyle(Paint.Style.STROKE);
-                    paint.setColor(netLineColor);
-                    paint.setStrokeWidth(netLineWidth);
-                    canvas.drawPath(path,paint);//画网线
-
-
                 }
 
 
-                if(j==0){//画放射线
-                    paint.setColor(radiantLineColor);
-                    paint.setStrokeWidth(radiantLineWidth);
-                    canvas.drawLine(centerX,centerY,  x,  y,paint);
+                if(j==0){
+                    if(i==radarItemSize-1){
+                            //画底色
+                            paint.setStyle(Paint.Style.FILL);
+                            paint.setColor(bgColor);
+                            canvas.drawPath(path,paint);
+
+                    }
+                    Point topPoint=new Point();
+                    topPointList.put(i,topPoint);
+                    topPoint.x= (int) x;
+                    topPoint.y= (int) y;
 
                     float labelCenterX=(float) (centerX+(radiantLineLength+labelMargin)*cos(degree));
                     float labelCenterY=(float) (centerY-(radiantLineLength+labelMargin)*sin(degree));
@@ -302,6 +302,27 @@ public class RadarView extends View {
 
         strokePath.close();
 
+
+
+        for (int i=0;i<radarItemSize;i++) {//画放射线
+            Point topPoint= topPointList.get(i);
+            if(topPoint!=null){
+                paint.setColor(radiantLineColor);
+                paint.setStrokeWidth(radiantLineWidth);
+                canvas.drawLine(centerX,centerY,  topPoint.x,  topPoint.y,paint);
+            }
+        }
+
+        for (int i=0;i<netLineNum;i++) {//画网线
+            Path path= netLinePathList.get(i);
+            if(path!=null){
+                paint.setStyle(Paint.Style.STROKE);
+                paint.setColor(netLineColor);
+                paint.setStrokeWidth(netLineWidth);
+                canvas.drawPath(path,paint);
+            }
+        }
+
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(solidColor);
         canvas.drawPath(strokePath,paint);
@@ -310,6 +331,10 @@ public class RadarView extends View {
         paint.setColor(strokeColor);
         paint.setStrokeWidth(strokeWidth);
         canvas.drawPath(strokePath,paint);
+
+
+
+
 
         paint.setStyle(Paint.Style.FILL);
         for (int i=0;i<radarItemSize;i++){
